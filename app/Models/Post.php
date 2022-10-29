@@ -20,4 +20,9 @@ class Post extends Model
     {
         return $this->belongsTo(user::class)->select(['name', 'username']); 
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

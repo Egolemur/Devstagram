@@ -12,7 +12,9 @@
     <body class="bg-gray-100">
         <header class="p-5 border-b bg-white shadow">
             <div class="container mx-auto flex justify-between items-center">
-                <h1 class="text-3xl font-black"> DevStagram </h1>
+                <a href="/">
+                    <h1 class="text-3xl font-black"> DevStagram </h1>
+                </a>
                 @auth
                     <nav class="flex gap-4 items-center">
                         <a class="flex items-center gap-2bg-white border p-2 text-gray-600 rounded text-sm uppercase font-bold cursor-pointer" href="{{ route('posts.create') }}">
@@ -22,7 +24,7 @@
                             </svg>                              
                             Publicar
                         </a>
-                        <a class="font-bold uppercase text-gray-600 text-sm" href="#"> Hola: <span class="font-normal">{{auth()->user()->username}}</span> </a>
+                        <a class="font-bold uppercase text-gray-600 text-sm" href="{{ route('posts.index', auth()->user()->username) }}"> Hola: <span class="font-normal">{{auth()->user()->username}}</span> </a>
                         <form method="POST" action="{{route('logout')}}">                            
                             @csrf
                             <button type="submit" class="font-bold uppercase text-gray-600 text-sm">Log Out</button>                     
@@ -32,18 +34,21 @@
 
                 @guest
                     <nav class="flex gap-4 items-center">
-                        <a class="font-bold uppercase text-gray-600 text-sm" href="/login">Login</a>
-                        <a class="font-bold uppercase text-gray-600 text-sm" href="/sign-up">Sign Up</a>                     
+                        <a class="font-bold uppercase text-gray-600 text-sm" href="{{ route('login') }}">Login</a>
+                        <a class="font-bold uppercase text-gray-600 text-sm" href="{{ route('register') }}">Sign Up</a>                     
                     </nav>                    
                 @endguest
             </div>
         </header>
 
         <main class="container mx-auto mt-10">
+            
             <h2 class="font-black text-center text-2xl mb-10">
                 @yield('titulo')
             </h2>
+
             @yield('contenido')
+            
         </main>
 
         <footer class="mt-10 text-center p-5 text-gray-500 font-bold uppercase">
