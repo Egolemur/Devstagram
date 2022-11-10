@@ -13,6 +13,18 @@ class PostController extends Controller
     {
         $this->middleware('auth')->except(['show', 'index']);
     }
+    
+    public function home(User $user)
+    {
+        $following = $user->iFollow;
+        // $user->posts()->paginate(10);
+        foreach()
+        
+        return view('main', [
+            'user' => $user,
+            'posts' => $posts
+        ]); 
+    }
 
     public function index(User $user) 
     {        

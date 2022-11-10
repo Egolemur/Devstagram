@@ -22,9 +22,7 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/home/{user:username}', [PostController::class, 'home'])->name('home');
 
 Route::get('/sign-up', [RegisterController::class, 'index'])->name('register');
 Route::post('/sign-up', [RegisterController::class, 'store']); 
