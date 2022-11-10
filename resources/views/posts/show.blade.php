@@ -11,18 +11,41 @@
         <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt="Imagen del post {{ $post->titulo }}">
 
         <div class="p-3 flex items-center gap-6">
-            <form action="{{ route('posts.likes.store', $post) }}" method="POST"> 
-                @csrf
-                <div class="my-4">
-                    <button type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                        </svg>                   
-                    </button>
-                </div>
-            </form>
+            @auth
 
-            <p>0 Likes</p>
+                @if($post->checkLike(auth()->user()))                    
+                    <form method="POST" action="{{ route('posts.likes.destroy', $post) }}"> 
+                        @method('DELETE')
+                        @csrf
+                        <div class="my-4">
+                            <button type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                </svg>                   
+                            </button>
+                        </div>
+                    </form>
+                @else                    
+                    <form action="{{ route('posts.likes.store', $post) }}" method="POST"> 
+                        @csrf
+                        <div class="my-4">
+                            <button type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                </svg>                   
+                            </button>
+                        </div>
+                    </form>   
+                @endif                
+            @endauth    
+            {{-- <a href="{{ route('posts.likes.index', $user) }}">
+                <p class="font-bold">{{$post->likes->count()}} 
+                    <span class="font-normal">likes</span>
+                </p>
+            </a> --}}
+            <p class="font-bold">{{$post->likes->count()}} 
+                <span class="font-normal">likes</span>
+            </p>
         </div>
 
         <div>
@@ -69,11 +92,12 @@
 
                     @endauth
 
-                    <div class="bg-white shadow mb-5 max-h-96 overflow-y-scroll my-10">
+                    <div class="bg-white shadow mb-5 max-h-96 overflow-y-scroll my-10">                        
                         @if ($post->comments->count())
                             @foreach ($post->comments as $comment)
                                 <div class="p-5 border-gray-300 border-b">
-                                    <a href="{{ route('posts.index', $comment->user) }}">
+                                    <a class="flex gap-4 items-center" href="{{ route('posts.index', $comment->user) }}">
+                                        <img class="w-8 my-4" src="{{ asset('uploads') . '/' . $post->imagen }}" alt="prueba">
                                         <p class="text-lg text-blue-500 font-bold">{{$comment->user->username}}</p>                    
                                     </a>
                                     <p class="">{{$comment->comentario}}</p>                    

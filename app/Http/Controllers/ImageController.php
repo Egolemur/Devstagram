@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class ImageController extends Controller
-{
+{    
     public function store(Request $request) 
     {
         $imagen = $request->file('file');

@@ -6,7 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -44,4 +46,15 @@ Route::post('/images', [ImageController::class, 'store'])->name('images.store');
 
 // Like a las fotos
 Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('posts.likes.store');
+Route::delete('/posts/{post}/dislike', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
 
+// Ver quien ha dado like a las publicaciones
+Route::post('/posts/{post}/like/view', [LikeController::class, 'index'])->name('posts.likes.index');
+
+// Rutas para el perfil
+Route::get('{user:username}/edit-profile', [PerfilController::class, 'index'])->name('profile.index');
+Route::post('{user:username}/edit-profile', [PerfilController::class, 'store'])->name('profile.store');
+
+// Srguir a otros usuarios
+Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('users.follow');
+Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
