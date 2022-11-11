@@ -18,11 +18,16 @@ class PostController extends Controller
     {
         $following = $user->iFollow;
         // $user->posts()->paginate(10);
-        foreach()
+        // dd($following);
+        foreach($following as $person) {
+            echo("$person[id] <br>");
+        }
+
+        exit;
         
         return view('main', [
             'user' => $user,
-            'posts' => $posts
+            // 'posts' => $posts
         ]); 
     }
 

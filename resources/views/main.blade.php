@@ -6,7 +6,7 @@
 
 @section('contenido')
     <section class="container mx-auto">        
-        @if ($posts->count())                    
+        @if ($user->iFollow)                    
         <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">   
             @foreach ($posts as $post)
                 <div> 
