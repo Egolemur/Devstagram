@@ -17,13 +17,11 @@ class PostController extends Controller
     public function home(User $user)
     {
         $following = $user->iFollow;
-        // $user->posts()->paginate(10);
-        // dd($following);
         foreach($following as $person) {
             echo("$person[id] <br>");
-        }
-
-        exit;
+        }     
+        
+        // $user->posts()->paginate(10);
         
         return view('main', [
             'user' => $user,
